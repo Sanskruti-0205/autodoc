@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
 import toast from "react-hot-toast";
 
@@ -18,8 +18,11 @@ import {
 export default function DashboardLayout({ children }) {
     const router = useRouter();
     const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const activeCategory = searchParams.get("category");
+
+const isActive = (path) => pathname === path;
+
+    // const searchParams = useSearchParams();
+    // const activeCategory = searchParams.get("category");
   return (
     
     <div className="flex min-h-screen bg-gray-100">
@@ -48,16 +51,21 @@ export default function DashboardLayout({ children }) {
 </button>
 
 
-   <button
+  
+<button
   onClick={() => router.push("/all-documents")}
-  className={`w-full flex items-center gap-3 px-4 py-2 rounded
-    ${pathname === "/all-documents"
-      ? "bg-slate-800"
-      : "hover:bg-slate-800"}`}
+  className={`w-full flex items-center gap-3 px-4 py-3 rounded
+    ${isActive("/all-documents")
+      ? "bg-emerald-600 text-white"
+      : "hover:bg-slate-800 text-white"}
+  `}
 >
   <FileText size={18} />
   All Documents
 </button>
+
+
+
 
 
   </div>
@@ -68,45 +76,38 @@ export default function DashboardLayout({ children }) {
       Categories
     </p>
 
-    <button
+   <button
   onClick={() => router.push("/all-documents?category=ID")}
-  className={`w-full flex items-center gap-3 px-4 py-2 rounded
-    ${activeCategory === "ID"
-      ? "bg-slate-800 text-white"
-      : "hover:bg-slate-800"}`}>
+  className="w-full flex items-center gap-3 px-4 py-2 rounded hover:bg-slate-800"
+>
   <FileText size={18} />
   ID
 </button>
 
-
 <button
   onClick={() => router.push("/all-documents?category=Education")}
-  className={`w-full flex items-center gap-3 px-4 py-2 rounded
-    ${activeCategory === "Education"
-      ? "bg-slate-800 text-white"
-      : "hover:bg-slate-800"}`}>
+  className="w-full flex items-center gap-3 px-4 py-2 rounded hover:bg-slate-800"
+>
   <GraduationCap size={18} />
   Education
 </button>
 
-   <button
+<button
   onClick={() => router.push("/all-documents?category=Finance")}
-  className={`w-full flex items-center gap-3 px-4 py-2 rounded
-    ${activeCategory === "Finance"
-      ? "bg-slate-800 text-white"
-      : "hover:bg-slate-800"}`}>
+  className="w-full flex items-center gap-3 px-4 py-2 rounded hover:bg-slate-800"
+>
   <Wallet size={18} />
   Finance
 </button>
+
 <button
   onClick={() => router.push("/all-documents?category=Medical")}
-  className={`w-full flex items-center gap-3 px-4 py-2 rounded
-    ${activeCategory === "Medical"
-      ? "bg-slate-800 text-white"
-      : "hover:bg-slate-800"}`}>
+  className="w-full flex items-center gap-3 px-4 py-2 rounded hover:bg-slate-800"
+>
   <Heart size={18} />
   Medical
 </button>
+
   </div>
 
   {/* BOTTOM (ALWAYS visible) */}
